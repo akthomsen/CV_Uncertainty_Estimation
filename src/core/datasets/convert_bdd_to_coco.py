@@ -49,35 +49,38 @@ def create_coco_lists(input_labels,
         annotations = grouped_per_frame[frame]
 
         for annotation in annotations:
-            if annotation['category'] in category_keys:
-                bbox = annotation['bbox']
-                bbox_coco = [
-                    bbox[0],
-                    bbox[1],
-                    bbox[2] - bbox[0],
-                    bbox[3] - bbox[1]]
-                annotations_list.append({'image_id': im_id,
-                                         'id': count,
-                                         'category_id': category_mapper[annotation['category']],
-                                         'bbox': bbox_coco,
-                                         'area': bbox_coco[2] * bbox_coco[3],
-                                         'iscrowd': 0})
-                count += 1
+            for l in annotation['labels']:
+                if l.get('category') in category_keys:
+                    bbox = list(l['box2d'].values())
+                    bbox_coco = [
+                        bbox[0],
+                        bbox[1],
+                        bbox[2] - bbox[0],
+                        bbox[3] - bbox[1]]
+                    annotations_list.append({'image_id': im_id,
+                                            'id': count,
+                                            'category_id': category_mapper[l['category']],
+                                            'bbox': bbox_coco,
+                                            'area': bbox_coco[2] * bbox_coco[3],
+                                            'iscrowd': 0})
+                    count += 1
 
     return images_list, annotations_list
 
 
-def main(args):
+def main(args=None):
     #########################################################
     # Specify Source Folders and Parameters For Frame Reader
     #########################################################
-    dataset_dir = args.dataset_dir
+    # dataset_dir = args.dataset_dir
+    dataset_dir = 'BDD_DATASET_ROOT/'
     train_label_file_name = os.path.join(
         dataset_dir, 'labels', 'train') + '.json'
     val_label_file_name = os.path.join(
         dataset_dir, 'labels', 'val') + '.json'
 
-    if args.output_dir is None:
+    # if args.output_dir is None:
+    if args is None:
         output_dir = os.path.expanduser(os.path.join(dataset_dir, 'labels'))
     else:
         output_dir = os.path.expanduser(args.output_dir)
@@ -147,6 +150,7 @@ if __name__ == "__main__":
         "--dataset-dir",
         required=True,
         type=str,
+        default='BBD_DATASET_ROOT/',
         help='bdd100k dataset directory')
     parser.add_argument(
         "--output-dir",
@@ -154,5 +158,6 @@ if __name__ == "__main__":
         type=str,
         help='converted dataset write directory')
 
-    args = parser.parse_args()
-    main(args)
+    # args = parser.parse_args()
+    # main(args)
+    main()

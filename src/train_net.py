@@ -14,6 +14,7 @@ from detectron2.evaluation import COCOEvaluator, DatasetEvaluators, verify_resul
 # Project imports
 from core.setup import setup_config, setup_arg_parser
 
+os.environ["NCCL_DEBUG"] = "INFO"
 
 class Trainer(DefaultTrainer):
     @classmethod
