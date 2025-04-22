@@ -1,5 +1,5 @@
 # Output
-data
+# data
 
 # PyCharm
 .idea
@@ -8,3 +8,5 @@ data
 *.pyc
 __pycache__
 
+# Data
+BDD_DATASET_ROOT
