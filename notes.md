@@ -15,6 +15,7 @@ This document serves as notes for the group on how to use the pod_compare packag
   - [Evaluation with metrics](#evaluation-with-metrics)
     - [M1](#m1)
     - [M3](#m3)
+    - [M9](#m9)
 
 # Installation
 **The steps in the [README](README.md) should not be followed.** The following are the steps we used to reproduce the environment.
@@ -222,4 +223,39 @@ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.289
 [04/22 00:49:35 d2.evaluation.testing]: copypaste: Task: bbox
 [04/22 00:49:35 d2.evaluation.testing]: copypaste: AP,AP50,AP75,APs,APm,APl
 [04/22 00:49:35 d2.evaluation.testing]: copypaste: 28.9391,52.2135,26.8932,7.2648,30.5397,51.1755
+```
+
+### M9
+trining output:
+```bash
+[04/22 18:36:34 d2.evaluation.fast_eval_api]: Evaluate annotation type *bbox*
+[04/22 18:36:39 d2.evaluation.fast_eval_api]: COCOeval_opt.evaluate() finished in 5.16 seconds.
+[04/22 18:36:39 d2.evaluation.fast_eval_api]: Accumulating evaluation results...
+[04/22 18:36:41 d2.evaluation.fast_eval_api]: COCOeval_opt.accumulate() finished in 1.45 seconds.
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.290
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.531
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.268
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.074
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.304
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.514
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.241
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.413
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.443
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.195
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.493
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.656
+[04/22 18:36:41 d2.evaluation.coco_evaluation]: Evaluation results for bbox:
+|   AP   |  AP50  |  AP75  |  APs  |  APm   |  APl   |
+|:------:|:------:|:------:|:-----:|:------:|:------:|
+| 29.011 | 53.051 | 26.815 | 7.410 | 30.437 | 51.353 |
+[04/22 18:36:41 d2.evaluation.coco_evaluation]: Per-category bbox AP:
+| category   | AP     | category   | AP     | category   | AP     |
+|:-----------|:-------|:-----------|:-------|:-----------|:-------|
+| car        | 44.699 | bus        | 40.970 | truck      | 38.736 |
+| person     | 27.031 | rider      | 17.296 | bike       | 19.201 |
+| motor      | 15.148 |            |        |            |        |
+[04/22 18:36:41 d2.engine.defaults]: Evaluation results for bdd_val in csv format:
+[04/22 18:36:41 d2.evaluation.testing]: copypaste: Task: bbox
+[04/22 18:36:41 d2.evaluation.testing]: copypaste: AP,AP50,AP75,APs,APm,APl
+[04/22 18:36:41 d2.evaluation.testing]: copypaste: 29.0114,53.0515,26.8150,7.4095,30.4369,51.3532
 ```

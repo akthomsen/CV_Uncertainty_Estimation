@@ -278,7 +278,7 @@ MODEL:
   WEIGHTS: detectron2://ImageNetPretrained/MSRA/R-50.pkl
 OUTPUT_DIR: /home/cv09f25/pod_compare/data/BDD-Detection/retinanet/retinanet_R_50_FPN_1x/random_seed_0
 PROBABILISTIC_INFERENCE:
-  AFFINITY_THRESHOLD: 0.9
+  AFFINITY_THRESHOLD: 0.7
   BAYES_OD:
     BOX_MERGE_MODE: bayesian_inference
     CLS_MERGE_MODE: bayesian_inference
@@ -293,7 +293,7 @@ PROBABILISTIC_INFERENCE:
     - 4000
   ENSEMBLES_DROPOUT:
     BOX_MERGE_MODE: pre_nms
-  INFERENCE_MODE: anchor_statistics
+  INFERENCE_MODE: standard_nms
   MC_DROPOUT:
     ENABLE: false
     NUM_RUNS: 1

@@ -448,3 +448,93 @@ ProbabilisticRetinaNet(
   [35mfc1000.{bias, weight}[0m
   [35mstem.conv1.bias[0m
 [04/22 08:57:56] detectron2.engine.train_loop INFO: Starting training from iteration 0
+[04/22 18:28:21] detectron2.engine.hooks INFO: Overall training speed: 89998 iterations in 9:30:09 (0.3801 s / it)
+[04/22 18:28:21] detectron2.engine.hooks INFO: Total training time: 9:30:14 (0:00:05 on hooks)
+[04/22 18:28:21] detectron2.data.datasets.coco INFO: Loaded 10000 images in COCO format from /home/cv09f25/pod_compare/BDD_DATASET_ROOT/labels/val_coco_format.json
+[04/22 18:28:22] detectron2.data.build INFO: Distribution of instances among all 7 categories:
+[36m|  category  | #instances   |  category  | #instances   |  category  | #instances   |
+|:----------:|:-------------|:----------:|:-------------|:----------:|:-------------|
+|    car     | 102506       |    bus     | 1597         |   truck    | 4245         |
+|   person   | 13262        |   rider    | 649          |    bike    | 1007         |
+|   motor    | 452          |            |              |            |              |
+|   total    | 123718       |            |              |            |              |[0m
+[04/22 18:28:22] detectron2.data.dataset_mapper INFO: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(800, 800), max_size=1333, sample_style='choice')]
+[04/22 18:28:22] detectron2.data.common INFO: Serializing 10000 elements to byte tensors and concatenating them all ...
+[04/22 18:28:22] detectron2.data.common INFO: Serialized dataset takes 9.17 MiB
+[04/22 18:28:22] detectron2.evaluation.coco_evaluation WARNING: COCO Evaluator instantiated using config, this is deprecated behavior. Please pass in explicit arguments instead.
+[04/22 18:28:22] detectron2.evaluation.evaluator INFO: Start inference on 5000 batches
+[04/22 18:28:32] detectron2.evaluation.evaluator INFO: Inference done 11/5000. Dataloading: 0.0009 s/iter. Inference: 0.0711 s/iter. Eval: 0.0002 s/iter. Total: 0.0721 s/iter. ETA=0:05:59
+[04/22 18:28:37] detectron2.evaluation.evaluator INFO: Inference done 79/5000. Dataloading: 0.0012 s/iter. Inference: 0.0729 s/iter. Eval: 0.0002 s/iter. Total: 0.0743 s/iter. ETA=0:06:05
+[04/22 18:28:42] detectron2.evaluation.evaluator INFO: Inference done 148/5000. Dataloading: 0.0012 s/iter. Inference: 0.0722 s/iter. Eval: 0.0002 s/iter. Total: 0.0736 s/iter. ETA=0:05:57
+[04/22 18:28:47] detectron2.evaluation.evaluator INFO: Inference done 217/5000. Dataloading: 0.0012 s/iter. Inference: 0.0719 s/iter. Eval: 0.0002 s/iter. Total: 0.0733 s/iter. ETA=0:05:50
+[04/22 18:28:52] detectron2.evaluation.evaluator INFO: Inference done 286/5000. Dataloading: 0.0012 s/iter. Inference: 0.0717 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:05:44
+[04/22 18:28:57] detectron2.evaluation.evaluator INFO: Inference done 355/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:05:39
+[04/22 18:29:02] detectron2.evaluation.evaluator INFO: Inference done 425/5000. Dataloading: 0.0012 s/iter. Inference: 0.0715 s/iter. Eval: 0.0002 s/iter. Total: 0.0729 s/iter. ETA=0:05:33
+[04/22 18:29:07] detectron2.evaluation.evaluator INFO: Inference done 494/5000. Dataloading: 0.0012 s/iter. Inference: 0.0715 s/iter. Eval: 0.0002 s/iter. Total: 0.0729 s/iter. ETA=0:05:28
+[04/22 18:29:12] detectron2.evaluation.evaluator INFO: Inference done 563/5000. Dataloading: 0.0012 s/iter. Inference: 0.0715 s/iter. Eval: 0.0002 s/iter. Total: 0.0729 s/iter. ETA=0:05:23
+[04/22 18:29:17] detectron2.evaluation.evaluator INFO: Inference done 632/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:05:19
+[04/22 18:29:22] detectron2.evaluation.evaluator INFO: Inference done 701/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:05:13
+[04/22 18:29:27] detectron2.evaluation.evaluator INFO: Inference done 770/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:05:08
+[04/22 18:29:32] detectron2.evaluation.evaluator INFO: Inference done 839/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:05:03
+[04/22 18:29:37] detectron2.evaluation.evaluator INFO: Inference done 908/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:04:58
+[04/22 18:29:42] detectron2.evaluation.evaluator INFO: Inference done 977/5000. Dataloading: 0.0012 s/iter. Inference: 0.0715 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:04:53
+[04/22 18:29:47] detectron2.evaluation.evaluator INFO: Inference done 1046/5000. Dataloading: 0.0012 s/iter. Inference: 0.0715 s/iter. Eval: 0.0002 s/iter. Total: 0.0729 s/iter. ETA=0:04:48
+[04/22 18:29:52] detectron2.evaluation.evaluator INFO: Inference done 1115/5000. Dataloading: 0.0012 s/iter. Inference: 0.0715 s/iter. Eval: 0.0002 s/iter. Total: 0.0729 s/iter. ETA=0:04:43
+[04/22 18:29:57] detectron2.evaluation.evaluator INFO: Inference done 1184/5000. Dataloading: 0.0012 s/iter. Inference: 0.0715 s/iter. Eval: 0.0002 s/iter. Total: 0.0729 s/iter. ETA=0:04:38
+[04/22 18:30:02] detectron2.evaluation.evaluator INFO: Inference done 1253/5000. Dataloading: 0.0012 s/iter. Inference: 0.0715 s/iter. Eval: 0.0002 s/iter. Total: 0.0729 s/iter. ETA=0:04:33
+[04/22 18:30:08] detectron2.evaluation.evaluator INFO: Inference done 1321/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:04:28
+[04/22 18:30:13] detectron2.evaluation.evaluator INFO: Inference done 1390/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:04:23
+[04/22 18:30:18] detectron2.evaluation.evaluator INFO: Inference done 1459/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:04:18
+[04/22 18:30:23] detectron2.evaluation.evaluator INFO: Inference done 1528/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:04:13
+[04/22 18:30:28] detectron2.evaluation.evaluator INFO: Inference done 1597/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:04:08
+[04/22 18:30:33] detectron2.evaluation.evaluator INFO: Inference done 1666/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:04:03
+[04/22 18:30:38] detectron2.evaluation.evaluator INFO: Inference done 1735/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:58
+[04/22 18:30:43] detectron2.evaluation.evaluator INFO: Inference done 1804/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:53
+[04/22 18:30:48] detectron2.evaluation.evaluator INFO: Inference done 1873/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:48
+[04/22 18:30:53] detectron2.evaluation.evaluator INFO: Inference done 1942/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:43
+[04/22 18:30:58] detectron2.evaluation.evaluator INFO: Inference done 2011/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:38
+[04/22 18:31:03] detectron2.evaluation.evaluator INFO: Inference done 2080/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:33
+[04/22 18:31:08] detectron2.evaluation.evaluator INFO: Inference done 2149/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:28
+[04/22 18:31:13] detectron2.evaluation.evaluator INFO: Inference done 2216/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:03:23
+[04/22 18:31:18] detectron2.evaluation.evaluator INFO: Inference done 2285/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:18
+[04/22 18:31:23] detectron2.evaluation.evaluator INFO: Inference done 2354/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:13
+[04/22 18:31:28] detectron2.evaluation.evaluator INFO: Inference done 2423/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:08
+[04/22 18:31:33] detectron2.evaluation.evaluator INFO: Inference done 2492/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:03:03
+[04/22 18:31:38] detectron2.evaluation.evaluator INFO: Inference done 2561/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:02:58
+[04/22 18:31:43] detectron2.evaluation.evaluator INFO: Inference done 2630/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:02:53
+[04/22 18:31:48] detectron2.evaluation.evaluator INFO: Inference done 2699/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:02:48
+[04/22 18:31:53] detectron2.evaluation.evaluator INFO: Inference done 2768/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:02:42
+[04/22 18:31:58] detectron2.evaluation.evaluator INFO: Inference done 2837/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:02:37
+[04/22 18:32:03] detectron2.evaluation.evaluator INFO: Inference done 2906/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:02:32
+[04/22 18:32:08] detectron2.evaluation.evaluator INFO: Inference done 2975/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:02:27
+[04/22 18:32:13] detectron2.evaluation.evaluator INFO: Inference done 3044/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:02:22
+[04/22 18:32:18] detectron2.evaluation.evaluator INFO: Inference done 3113/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:02:17
+[04/22 18:32:23] detectron2.evaluation.evaluator INFO: Inference done 3182/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:02:12
+[04/22 18:32:28] detectron2.evaluation.evaluator INFO: Inference done 3248/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:02:08
+[04/22 18:32:33] detectron2.evaluation.evaluator INFO: Inference done 3317/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:02:02
+[04/22 18:32:38] detectron2.evaluation.evaluator INFO: Inference done 3386/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:01:57
+[04/22 18:32:44] detectron2.evaluation.evaluator INFO: Inference done 3455/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:01:52
+[04/22 18:32:49] detectron2.evaluation.evaluator INFO: Inference done 3524/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:01:47
+[04/22 18:32:54] detectron2.evaluation.evaluator INFO: Inference done 3593/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:01:42
+[04/22 18:32:59] detectron2.evaluation.evaluator INFO: Inference done 3662/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:01:37
+[04/22 18:33:04] detectron2.evaluation.evaluator INFO: Inference done 3731/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:01:32
+[04/22 18:33:09] detectron2.evaluation.evaluator INFO: Inference done 3800/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:01:27
+[04/22 18:33:14] detectron2.evaluation.evaluator INFO: Inference done 3869/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:01:22
+[04/22 18:33:19] detectron2.evaluation.evaluator INFO: Inference done 3938/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:01:17
+[04/22 18:33:24] detectron2.evaluation.evaluator INFO: Inference done 4007/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:01:12
+[04/22 18:33:29] detectron2.evaluation.evaluator INFO: Inference done 4076/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:01:07
+[04/22 18:33:34] detectron2.evaluation.evaluator INFO: Inference done 4145/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:01:02
+[04/22 18:33:39] detectron2.evaluation.evaluator INFO: Inference done 4214/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:00:57
+[04/22 18:33:44] detectron2.evaluation.evaluator INFO: Inference done 4283/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:00:52
+[04/22 18:33:49] detectron2.evaluation.evaluator INFO: Inference done 4352/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:00:47
+[04/22 18:33:54] detectron2.evaluation.evaluator INFO: Inference done 4421/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:00:42
+[04/22 18:33:59] detectron2.evaluation.evaluator INFO: Inference done 4490/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:00:37
+[04/22 18:34:04] detectron2.evaluation.evaluator INFO: Inference done 4559/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:00:32
+[04/22 18:34:09] detectron2.evaluation.evaluator INFO: Inference done 4625/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:00:27
+[04/22 18:34:14] detectron2.evaluation.evaluator INFO: Inference done 4694/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:00:22
+[04/22 18:34:19] detectron2.evaluation.evaluator INFO: Inference done 4763/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:00:17
+[04/22 18:34:24] detectron2.evaluation.evaluator INFO: Inference done 4832/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:00:12
+[04/22 18:34:29] detectron2.evaluation.evaluator INFO: Inference done 4901/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0731 s/iter. ETA=0:00:07
+[04/22 18:34:34] detectron2.evaluation.evaluator INFO: Inference done 4970/5000. Dataloading: 0.0012 s/iter. Inference: 0.0716 s/iter. Eval: 0.0002 s/iter. Total: 0.0730 s/iter. ETA=0:00:02
+[04/22 18:34:37] detectron2.evaluation.evaluator INFO: Total inference time: 0:06:05.395008 (0.073152 s / iter per device, on 2 devices)
+[04/22 18:34:37] detectron2.evaluation.evaluator INFO: Total inference pure compute time: 0:05:57 (0.071555 s / iter per device, on 2 devices)
