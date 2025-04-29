@@ -281,7 +281,7 @@ PROBABILISTIC_INFERENCE:
   AFFINITY_THRESHOLD: 0.9
   BAYES_OD:
     BOX_MERGE_MODE: bayesian_inference
-    CLS_MERGE_MODE: max_score
+    CLS_MERGE_MODE: bayesian_inference
     DIRCH_PRIOR: uniform
   ENSEMBLES:
     BOX_MERGE_MODE: pre_nms
@@ -293,7 +293,7 @@ PROBABILISTIC_INFERENCE:
     - 4000
   ENSEMBLES_DROPOUT:
     BOX_MERGE_MODE: pre_nms
-  INFERENCE_MODE: bayes_od
+  INFERENCE_MODE: mc_dropout_ensembles
   MC_DROPOUT:
     ENABLE: true
     NUM_RUNS: 10

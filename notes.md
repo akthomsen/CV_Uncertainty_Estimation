@@ -15,7 +15,9 @@ This document serves as notes for the group on how to use the pod_compare packag
   - [Evaluation with metrics](#evaluation-with-metrics)
     - [M1](#m1)
     - [M3](#m3)
-    - [M6: BayesOD + Dropout](#m6-bayesod--dropout)
+    - [❗ M4: Loss Attenuation + Dropout](#-m4-loss-attenuation--dropout)
+    - [❗ M6: BayesOD + Dropout](#-m6-bayesod--dropout)
+    - [M7](#m7)
     - [M9](#m9)
 
 # Installation
@@ -230,7 +232,30 @@ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.289
 [04/22 00:49:35 d2.evaluation.testing]: copypaste: 28.9391,52.2135,26.8932,7.2648,30.5397,51.1755
 ```
 
-### M6: BayesOD + Dropout
+### ❗ M4: Loss Attenuation + Dropout 
+Command for inference:
+```bash
+ python src/apply_net.py --dataset-dir BDD_DATASET_ROOT --test-dataset bdd_val --config-file BDD-Detection/retinanet/retinanet_R_50_FPN_1x_reg_cls_var_dropout.yaml --inference-config Inference/mc_dropout_ensembles_pre_nms.yaml --random-seed 1
+```
+
+Output after inference:
+```bash
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10000/10000 [00:34<00:00, 286.05it/s]
++------------------+---------------------+---------------------+---------------------+
+|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
++------------------+---------------------+---------------------+---------------------+
+| True Positives:  |        72550        |        0.8119       |       14.9692       |
+| False Positives: |        363110       |        0.1286       |       17.7588       |
+| False Negatives: |         1125        |          -          |          -          |
++------------------+---------------------+---------------------+---------------------+
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+|             0.0362             |             0.0407             |             0.0851            |             0.1398            |             0.4361            |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+```
+
+### ❗ M6: BayesOD + Dropout
 Command for inference:
 ```bash
 python src/apply_net.py --dataset-dir BDD_DATASET_ROOT --test-dataset bdd_val --config-file BDD-Detection/retinanet/retinanet_R_50_FPN_1x_reg_cls_var_dropout.yaml --inference-config Inference/bayes_od_mc_dropout.yaml --random-seed 1
@@ -251,6 +276,13 @@ Output after inference:
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 |             0.0362             |             0.0121             |             0.0321            |             0.1384            |             0.2202            |
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+```
+
+### M7
+Command for inference:
+```bash
+python src/apply_net.py --dataset-dir BDD_DATASET_ROOT --test-dataset bdd_val --config-file BDD-Detection/retinanet/retinanet_R_50_FPN_1x_reg_cls_var.yaml --inf
+erence-config Inference/ensembles_pre_nms.yaml --random-seed 1
 ```
 
 ### M9
