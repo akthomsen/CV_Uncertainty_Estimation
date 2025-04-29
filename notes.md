@@ -15,6 +15,7 @@ This document serves as notes for the group on how to use the pod_compare packag
   - [Evaluation with metrics](#evaluation-with-metrics)
     - [M1](#m1)
     - [M3](#m3)
+    - [M6: BayesOD + Dropout](#m6-bayesod--dropout)
     - [M9](#m9)
 
 # Installation
@@ -150,8 +151,8 @@ BDD-Detection/retinanet/retinanet_R_50_FPN_1x.yaml
 ## Overview of trained models
 Unique ID | Method Name | Config File | Inference Config File | Trained
 --- | --- | --- | --- | ---
-M1 |Baseline RetinaNet | retinanet_R_50_FPN_1x.yaml| standard_nms.yaml | 🟨 (not fully) 
-M2 |Output Redundancy| retinanet_R_50_FPN_1x.yaml | anchor_statistics.yaml | 🟨 (not fully) 
+M1 |Baseline RetinaNet | retinanet_R_50_FPN_1x.yaml| standard_nms.yaml | 🟩 
+M2 |Output Redundancy| retinanet_R_50_FPN_1x.yaml | anchor_statistics.yaml | 🟩 
 M3 |Loss Attenuation |retinanet_R_50_FPN_1x_reg_cls_var.yaml| standard_nms.yaml | 🟩
 M4 |Loss Attenuation + Dropout | retinanet_R_50_FPN_1x_reg_cls_var_dropout.yaml | mc_dropout_ensembles_pre_nms.yaml | 🟩
 M5 |BayesOD | retinanet_R_50_FPN_1x_reg_cls_var.yaml | bayes_od.yaml | 🟩
@@ -161,36 +162,40 @@ M8 |Post-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_post_
 M9 |Black Box| retinanet_R_50_FPN_1x_dropout.yaml | mc_dropout_ensembles_post_nms.yaml | 🟥
 
 ## Evaluation with metrics
-.
-
-
-<!-- Unique ID | Method Name | Metric1 | Metric2 | Metric3 | Metric4...
---- | --- | --- | --- | --- | ---
-M1 |Baseline RetinaNet | 0.123 | 0.456 | 0.789 | 0.012
-M2 |Output Redundancy| 0.123 | 0.456 | 0.789 | 0.012
-M3 |Loss Attenuation | 0.123 | 0.456 | 0.789 | 0.012
-M4 |Loss Attenuation + Dropout | 0.123 | 0.456 | 0.789 | 0.012
-M5 |BayesOD | 0.123 | 0.456 | 0.789 | 0.012
-M6 |BayesOD + Dropout | 0.123 | 0.456 | 0.789 | 0.012
-M7 |Pre-NMS Ensembles| 0.123 | 0.456 | 0.789 | 0.012
-M8 |Post-NMS Ensembles| 0.123 | 0.456 | 0.789 | 0.012
-M9 |Black Box| 0.123 | 0.456 | 0.789 | 0.012 -->
 
 ### M1
-output from inference:
+Output from finished training:
 ```bash
-+------------------+---------------------+---------------------+---------------------+
-|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
-+------------------+---------------------+---------------------+---------------------+
-| True Positives:  |        71519        |        1.0239       |      3069.6577      |
-| False Positives: |        372490       |        0.1394       |       -1.8071       |
-| False Negatives: |         1424        |          -          |          -          |
-+------------------+---------------------+---------------------+---------------------+
-+--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
-| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
-+--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
-|             0.0350             |             0.0432             |             0.1287            |             0.1822            |             0.4984            |
-+--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+[04/24 00:00:39 d2.evaluation.fast_eval_api]: Evaluate annotation type *bbox*
+[04/24 00:00:44 d2.evaluation.fast_eval_api]: COCOeval_opt.evaluate() finished in 5.42 seconds.
+[04/24 00:00:45 d2.evaluation.fast_eval_api]: Accumulating evaluation results...
+[04/24 00:00:46 d2.evaluation.fast_eval_api]: COCOeval_opt.accumulate() finished in 1.88 seconds.
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.296
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.536
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.274
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.076
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.313
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.515
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.244
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.419
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.449
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.200
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.502
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.660
+[04/24 00:00:46 d2.evaluation.coco_evaluation]: Evaluation results for bbox:
+|   AP   |  AP50  |  AP75  |  APs  |  APm   |  APl   |
+|:------:|:------:|:------:|:-----:|:------:|:------:|
+| 29.556 | 53.620 | 27.393 | 7.606 | 31.272 | 51.482 |
+[04/24 00:00:46 d2.evaluation.coco_evaluation]: Per-category bbox AP:
+| category   | AP     | category   | AP     | category   | AP     |
+|:-----------|:-------|:-----------|:-------|:-----------|:-------|
+| car        | 45.068 | bus        | 41.053 | truck      | 38.713 |
+| person     | 27.297 | rider      | 18.987 | bike       | 19.721 |
+| motor      | 16.052 |            |        |            |        |
+[04/24 00:00:47 d2.engine.defaults]: Evaluation results for bdd_val in csv format:
+[04/24 00:00:47 d2.evaluation.testing]: copypaste: Task: bbox
+[04/24 00:00:47 d2.evaluation.testing]: copypaste: AP,AP50,AP75,APs,APm,APl
+[04/24 00:00:47 d2.evaluation.testing]: copypaste: 29.5557,53.6202,27.3928,7.6064,31.2722,51.4816
 ```
 
 
@@ -223,6 +228,29 @@ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.289
 [04/22 00:49:35 d2.evaluation.testing]: copypaste: Task: bbox
 [04/22 00:49:35 d2.evaluation.testing]: copypaste: AP,AP50,AP75,APs,APm,APl
 [04/22 00:49:35 d2.evaluation.testing]: copypaste: 28.9391,52.2135,26.8932,7.2648,30.5397,51.1755
+```
+
+### M6: BayesOD + Dropout
+Command for inference:
+```bash
+python src/apply_net.py --dataset-dir BDD_DATASET_ROOT --test-dataset bdd_val --config-file BDD-Detection/retinanet/retinanet_R_50_FPN_1x_reg_cls_var_dropout.yaml --inference-config Inference/bayes_od_mc_dropout.yaml --random-seed 1
+```
+
+Output after inference:
+```bash
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10000/10000 [00:34<00:00, 290.14it/s]
++------------------+---------------------+---------------------+---------------------+
+|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
++------------------+---------------------+---------------------+---------------------+
+| True Positives:  |        72463        |        0.8139       |       12.5524       |
+| False Positives: |        363107       |        0.1286       |       16.8985       |
+| False Negatives: |         1126        |          -          |          -          |
++------------------+---------------------+---------------------+---------------------+
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+|             0.0362             |             0.0121             |             0.0321            |             0.1384            |             0.2202            |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 ```
 
 ### M9

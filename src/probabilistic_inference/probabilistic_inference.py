@@ -204,7 +204,7 @@ class RetinaNetProbabilisticPredictor(ProbabilisticPredictor):
                     input_im,
                     return_anchorwise_output=True,
                     num_mc_dropout_runs=self.num_mc_dropout_runs)
-                n_fms = len(self.model.in_features)
+                n_fms = len(self.model.head_in_features)
                 outputs_list = [{key: value[i * n_fms:(i + 1) * n_fms] if value is not None else value for key,
                                  value in outputs_list.items()} for i in range(self.num_mc_dropout_runs)]
 
@@ -446,7 +446,7 @@ class RetinaNetProbabilisticPredictor(ProbabilisticPredictor):
                 input_im,
                 return_anchorwise_output=False,
                 num_mc_dropout_runs=self.num_mc_dropout_runs)
-            n_fms = len(self.model.in_features)
+            n_fms = len(self.model.head_in_features)
             outputs_list = [{key: value[i * n_fms:(i + 1) * n_fms] if value is not None else value for key,
                              value in outputs_dict.items()} for i in range(self.num_mc_dropout_runs)]
 
