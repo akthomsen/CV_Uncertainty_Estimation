@@ -100,7 +100,7 @@ MODEL:
     CLS_VAR_LOSS:
       NAME: loss_attenuation
       NUM_SAMPLES: 10
-    DROPOUT_RATE: 0.2
+    DROPOUT_RATE: 0.0
     MC_DROPOUT: {}
   PROPOSAL_GENERATOR:
     MIN_SIZE: 0
@@ -183,7 +183,7 @@ MODEL:
     - 5.0
     CLS_AGNOSTIC_BBOX_REG: false
     CONV_DIM: 256
-    DROPOUT_RATE: 0.2
+    DROPOUT_RATE: 0.0
     FC_DIM: 1024
     NAME: ''
     NORM: ''
@@ -276,12 +276,12 @@ MODEL:
     NORM: GN
     NUM_CLASSES: 54
   WEIGHTS: detectron2://ImageNetPretrained/MSRA/R-50.pkl
-OUTPUT_DIR: /home/cv09f25/pod_compare/data/BDD-Detection/retinanet/retinanet_R_50_FPN_1x_reg_cls_var_dropout/random_seed_1
+OUTPUT_DIR: /home/cv09f25/pod_compare/data/BDD-Detection/retinanet/retinanet_R_50_FPN_1x_reg_cls_var/random_seed_100
 PROBABILISTIC_INFERENCE:
-  AFFINITY_THRESHOLD: 0.9
+  AFFINITY_THRESHOLD: 0.7
   BAYES_OD:
     BOX_MERGE_MODE: bayesian_inference
-    CLS_MERGE_MODE: max_score
+    CLS_MERGE_MODE: bayesian_inference
     DIRCH_PRIOR: uniform
   ENSEMBLES:
     BOX_MERGE_MODE: pre_nms
@@ -293,11 +293,11 @@ PROBABILISTIC_INFERENCE:
     - 4000
   ENSEMBLES_DROPOUT:
     BOX_MERGE_MODE: pre_nms
-  INFERENCE_MODE: bayes_od
+  INFERENCE_MODE: standard_nms
   MC_DROPOUT:
-    ENABLE: true
-    NUM_RUNS: 10
-SEED: 1
+    ENABLE: false
+    NUM_RUNS: 1
+SEED: 100
 SOLVER:
   AMP:
     ENABLED: false

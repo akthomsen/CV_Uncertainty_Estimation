@@ -24,7 +24,9 @@ This document serves as notes for the group on how to use the pod_compare packag
       - [random seed: 100](#random-seed-100)
       - [Random seed: 1000](#random-seed-1000)
       - [Inference](#inference)
+    - [M8: Post-NMS Ensembles](#m8-post-nms-ensembles)
     - [M9](#m9)
+    - [M10: BayesOD + Ensembles](#m10-bayesod--ensembles)
 
 # Installation
 **The steps in the [README](README.md) should not be followed.** The following are the steps we used to reproduce the environment.
@@ -217,6 +219,42 @@ Output from finished training:
 [04/24 00:00:47 d2.evaluation.testing]: copypaste: 29.5557,53.6202,27.3928,7.6064,31.2722,51.4816
 ```
 
+Output after inference:
+```bash
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.410
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.662
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.426
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.123
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.425
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.678
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.210
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.471
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.528
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.246
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.563
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.773
+Classification Score at Optimal F-1 Score: 0.3385874211788178
+Began pre-processing ground truth annotations...
+Done!
+Began pre-processing predicted instances...
+/home/cv09f25/pod_compare/src/core/evaluation_tools/evaluation_utils.py:52: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  ../torch/csrc/utils/tensor_new.cpp:201.)
+  device), torch.as_tensor([box_inds], dtype=torch.float32).to(device)))
+Done!
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9918/9918 [00:31<00:00, 317.52it/s]
++------------------+---------------------+---------------------+---------------------+
+|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
++------------------+---------------------+---------------------+---------------------+
+| True Positives:  |        66883        |        0.5994       |      8445.6035      |
+| False Positives: |         9625        |        0.5678       |       -3.5162       |
+| False Negatives: |        13731        |          -          |          -          |
++------------------+---------------------+---------------------+---------------------+
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+|             0.0691             |             0.0737             |             0.2243            |             0.2063            |             0.4613            |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+```
+
 ### M4: Loss Attenuation + Dropout 
 Command for inference:
 ```bash
@@ -248,18 +286,37 @@ python src/apply_net.py --dataset-dir BDD_DATASET_ROOT --test-dataset bdd_val --
 
 Output after inference:
 ```bash
-100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10000/10000 [00:34<00:00, 290.14it/s]
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.405
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.649
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.423
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.117
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.423
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.682
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.210
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.471
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.522
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.215
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.565
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.784
+Classification Score at Optimal F-1 Score: 0.3340976595878601
+Began pre-processing ground truth annotations...
+Done!
+Began pre-processing predicted instances...
+/home/cv09f25/pod_compare/src/core/evaluation_tools/evaluation_utils.py:52: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  ../torch/csrc/utils/tensor_new.cpp:201.)
+  device), torch.as_tensor([box_inds], dtype=torch.float32).to(device)))
+Done!
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9914/9914 [00:31<00:00, 313.72it/s]
 +------------------+---------------------+---------------------+---------------------+
 |   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
 +------------------+---------------------+---------------------+---------------------+
-| True Positives:  |        72463        |        0.8139       |       12.5524       |
-| False Positives: |        363107       |        0.1286       |       16.8985       |
-| False Negatives: |         1126        |          -          |          -          |
+| True Positives:  |        65239        |        0.6042       |       12.3024       |
+| False Positives: |         8457        |        0.5676       |       12.8177       |
+| False Negatives: |        14115        |          -          |          -          |
 +------------------+---------------------+---------------------+---------------------+
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 | Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
-|             0.0362             |             0.0121             |             0.0321            |             0.1384            |             0.2202            |
+|             0.0707             |             0.0092             |             0.0248            |             0.2072            |             0.3482            |
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 ```
 
@@ -444,9 +501,72 @@ erence-config Inference/ensembles_pre_nms.yaml
 
 Output after inference:
 ```bash
+ DONE (t=5.77s).
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.417
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.664
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.435
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.128
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.433
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.692
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.214
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.479
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.531
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.234
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.569
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.791
+Classification Score at Optimal F-1 Score: 0.3322632536292076
++------------------+---------------------+---------------------+---------------------+
+|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
++------------------+---------------------+---------------------+---------------------+
+| True Positives:  |        66819        |        0.6026       |       14.8292       |
+| False Positives: |         8352        |        0.5491       |       16.6041       |
+| False Negatives: |        13639        |          -          |          -          |
++------------------+---------------------+---------------------+---------------------+
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+|             0.0735             |             0.0428             |             0.0914            |             0.2003            |             0.4669            |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 ```
 
 
+
+### M8: Post-NMS Ensembles
+Output after inference:
+```bash
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.417
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.665
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.434
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.125
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.431
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.695
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.218
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.487
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.540
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.246
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.577
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.798
+Classification Score at Optimal F-1 Score: 0.340582500398159
+Began pre-processing ground truth annotations...
+Done!
+Began pre-processing predicted instances...
+/home/cv09f25/pod_compare/src/core/evaluation_tools/evaluation_utils.py:52: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  ../torch/csrc/utils/tensor_new.cpp:201.)
+  device), torch.as_tensor([box_inds], dtype=torch.float32).to(device)))
+Done!
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9930/9930 [03:57<00:00, 41.81it/s]
++------------------+---------------------+---------------------+---------------------+
+|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
++------------------+---------------------+---------------------+---------------------+
+| True Positives:  |        67335        |        0.6033       |       14.8280       |
+| False Positives: |        11328        |        0.5459       |       16.3226       |
+| False Negatives: |        11589        |          -          |          -          |
++------------------+---------------------+---------------------+---------------------+
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+|             0.0663             |             0.0428             |             0.0921            |             0.1980            |             0.4755            |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+```
 
 ### M9
 trining output:
@@ -481,4 +601,38 @@ trining output:
 [04/22 18:36:41 d2.evaluation.testing]: copypaste: Task: bbox
 [04/22 18:36:41 d2.evaluation.testing]: copypaste: AP,AP50,AP75,APs,APm,APl
 [04/22 18:36:41 d2.evaluation.testing]: copypaste: 29.0114,53.0515,26.8150,7.4095,30.4369,51.3532
+```
+
+### M10: BayesOD + Ensembles
+I don't think this has worked.. it's identical to M8. 
+
+The bayesian fusion together with ensembles. 
+
+Output after inference:
+```bash
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.417
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.665
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.434
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.125
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.431
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.695
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.218
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.487
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.540
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.246
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.577
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.798
+Classification Score at Optimal F-1 Score: 0.340582500398159
++------------------+---------------------+---------------------+---------------------+
+|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
++------------------+---------------------+---------------------+---------------------+
+| True Positives:  |        67335        |        0.6033       |       14.8280       |
+| False Positives: |        11328        |        0.5459       |       16.3226       |
+| False Negatives: |        11589        |          -          |          -          |
++------------------+---------------------+---------------------+---------------------+
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+|             0.0663             |             0.0428             |             0.0921            |             0.1980            |             0.4755            |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 ```

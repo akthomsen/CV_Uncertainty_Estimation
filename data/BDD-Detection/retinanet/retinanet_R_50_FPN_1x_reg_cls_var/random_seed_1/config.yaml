@@ -286,11 +286,11 @@ PROBABILISTIC_INFERENCE:
   ENSEMBLES:
     BOX_MERGE_MODE: pre_nms
     RANDOM_SEED_NUMS:
-    - 0
+    - 1
+    - 42
+    - 100
+    - 713
     - 1000
-    - 2000
-    - 3000
-    - 4000
   ENSEMBLES_DROPOUT:
     BOX_MERGE_MODE: pre_nms
   INFERENCE_MODE: ensembles

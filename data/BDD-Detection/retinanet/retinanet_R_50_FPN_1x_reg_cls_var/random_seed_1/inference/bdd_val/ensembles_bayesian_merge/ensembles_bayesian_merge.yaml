@@ -5,6 +5,6 @@ PROBABILISTIC_INFERENCE:
     AFFINITY_THRESHOLD: 0.9
 
     ENSEMBLES:
-        BOX_MERGE_MODE: 'pre_nms'  # 'pre_nms' or 'post_nms'
+        BOX_MERGE_MODE: 'bayesian_inference'  # changed from 'pre_nms' or 'post_nms'
         # Random Seeds used for training model parameters
         RANDOM_SEED_NUMS: [1, 42, 100, 713, 1000]

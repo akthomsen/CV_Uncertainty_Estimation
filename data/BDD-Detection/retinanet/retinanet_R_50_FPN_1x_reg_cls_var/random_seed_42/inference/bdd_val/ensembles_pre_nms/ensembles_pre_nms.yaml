@@ -7,4 +7,4 @@ PROBABILISTIC_INFERENCE:
     ENSEMBLES:
         BOX_MERGE_MODE: 'pre_nms'  # 'pre_nms' or 'post_nms'
         # Random Seeds used for training model parameters
-        RANDOM_SEED_NUMS: [1, 42, 100, 713, 1000]
+        RANDOM_SEED_NUMS: [0, 1000, 2000, 3000, 4000]
