@@ -284,7 +284,7 @@ PROBABILISTIC_INFERENCE:
     CLS_MERGE_MODE: bayesian_inference
     DIRCH_PRIOR: uniform
   ENSEMBLES:
-    BOX_MERGE_MODE: pre_nms
+    BOX_MERGE_MODE: post_nms
     RANDOM_SEED_NUMS:
     - 1
     - 42
