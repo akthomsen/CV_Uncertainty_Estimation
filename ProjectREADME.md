@@ -131,3 +131,5 @@ M8 |Post-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_post_
 ### Evaluation with metrics
 ![Method comparison](docs\img\evaluation.PNG "BayesOD vs. Deep Ensembles")
 
+For a more detailed evaluation, see the project [notes](docs/notes.md).
+
