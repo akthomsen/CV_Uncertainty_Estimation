@@ -9,8 +9,8 @@ This repository reproduces and compares two methods for incorporating uncertaint
 
 
 
-## Get Started
-### 1. Prerequisites
+## Quick Start
+### Prerequisites
 - Python (3.7)
 - PyTorch (1.10.0)
 - CUDA (11.3)
@@ -19,7 +19,7 @@ This repository reproduces and compares two methods for incorporating uncertaint
 - The available modules on the cluster (see ```module avail```).
 - The compute capabilities of the GPU (s86).
 
-### 2. Installation Steps
+### Installation Steps
 1. Install Python 3.7 and make it the global Python version by running the following commands:
     ```bash
     pip install pyenv
@@ -46,3 +46,60 @@ This repository reproduces and compares two methods for incorporating uncertaint
     1. Go to [the detectron2 webpage](https://github.com/facebookresearch/detectron2/releases) and download release 0.4 as zip. 
     2. Unzip the file and go to the ```/Users/au691667/Downloads/detectron2-0.4/detectron2/modeling/meta_arch```folder. 
     3. Copy the ```retinanet.py``` file and paste it in the ```.pyenv/versions/3.7/site-packages/detectron2/modeling/meta_arch``` folder.
+
+
+## Dataset
+
+### BDD Dataset
+Download the Berkeley Deep Drive (BDD) Object Detection Dataset [here](https://bdd-data.berkeley.edu/). The BDD
+dataset should have the following structure:
+<br>
+ 
+     └── BDD_DATASET_ROOT
+         ├── info
+         |   └── 100k
+         |       ├── train
+         |       └── val
+         ├── labels
+         └── images
+                ├── 10K
+                └── 100K
+                    ├── test
+                    ├── train
+                    └── val
+
+
+For all BDD dataset, labels need to be converted to COCO format. To do so, run the following:
+```bash
+python src/core/datasets convert_bdd_to_coco.py --dataset-dir /path/to/bdd/dataset/root
+```
+If the script to convert BDD labels to COCO format does not work, please use [these pre-converted labels](https://drive.google.com/file/d/1hOd3zX1Qt0_uV64uJBLidavjbtrv1tXI/view?usp=sharing).
+
+## Training
+To train the model(s) in the paper, run these commands:
+
+1. **Create session**  
+   ```bash
+   screen -S training
+   ```
+
+2. **Run training script**  
+   ```bash
+   python train.py ...
+   ```
+   - Example of use of command:
+        ``` train
+        python src/train_net.py --num-gpus 2 --dataset-dir BDD_DATASET_ROOT --config-file BDD-Detection/retinanet/retinanet_R_50_FPN_1x_reg_cls_var.yaml --random-seed 42 --resume
+        ```
+3. **Detach session**  
+   Press `Ctrl+A` then `D`
+
+4. **Reattach later**  
+   ```bash
+   screen -r training
+   ```
+
+### Useful Screen Commands:
+- List sessions: `screen -ls`
+- Kill session: `screen -XS training quit`
+
