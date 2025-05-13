@@ -103,3 +103,31 @@ To train the model(s) in the paper, run these commands:
 - List sessions: `screen -ls`
 - Kill session: `screen -XS training quit`
 
+## Evaluation
+For running inference and evaluation of a model, run the following code:
+```eval
+python src/apply_net.py --dataset-dir /path/to/test/dataset/root --test-dataset test_dataset_name --config-file BDD-Detection/retinanet/name_of_config.yaml --inference-config Inference/name_of_inference_config.yaml
+```
+
+`--test-dataset` can be one of `bdd_val`, `kitti_val`, or `lyft_val`. `--dataset-dir` corresponds to the root directory of the dataset used.
+
+Evaluation code will run inference on the test dataset and then will generate mAP, Negative Log Likelihood, Calibration Error, and Minimum Uncertainty Error results. If only evaluation of metrics is required,
+add `--eval-only` to the above code snippet.
+
+## Results
+
+### Overview of trained models
+Unique ID | Method Name | Config File | Inference Config File | Trained
+--- | --- | --- | --- | ---
+M1 |Baseline RetinaNet | retinanet_R_50_FPN_1x.yaml| standard_nms.yaml | 🟩 
+M2 |Output Redundancy| retinanet_R_50_FPN_1x.yaml | anchor_statistics.yaml | 🟩 
+M3 |Loss Attenuation |retinanet_R_50_FPN_1x_reg_cls_var.yaml| standard_nms.yaml | 🟩
+M4 |Loss Attenuation + Dropout | retinanet_R_50_FPN_1x_reg_cls_var_dropout.yaml | mc_dropout_ensembles_pre_nms.yaml | 🟩
+M5 |BayesOD | retinanet_R_50_FPN_1x_reg_cls_var.yaml | bayes_od.yaml | 🟩
+M6 |BayesOD + Dropout | retinanet_R_50_FPN_1x_reg_cls_var_dropout.yaml | bayes_od_mc_dropout.yaml | 🟩
+M7 |Pre-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_pre_nms.yaml | 🟩
+M8 |Post-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_post_nms.yaml | 🟩
+
+### Evaluation with metrics
+![Method comparison](docs\img\evaluation.PNG "BayesOD vs. Deep Ensembles")
+
