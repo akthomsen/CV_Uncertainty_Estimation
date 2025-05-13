@@ -132,3 +132,33 @@ M8 |Post-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_post_
 ![Method comparison](docs\img\evaluation.PNG)
 
 For a more detailed evaluation, see the project [notes](docs/notes.md).
+
+## Acknowledgements
+This project re‑uses code from the public implementations of
+```
+@misc{feng2020review,
+title={A Review and Comparative Study on Probabilistic Object Detection in Autonomous Driving}, 
+author={Di Feng and Ali Harakeh and Steven Waslander and Klaus Dietmayer},
+year={2020},
+eprint={2011.10671},
+archivePrefix={arXiv},
+primaryClass={cs.CV}}
+```
+
+## Authors
+* Andreas Kaag Thomsen
+* Asger Song Høøck Poulsen
+* Niels Viggo Stark Madsen
+This project was done as part of the Computer Vision course at Aarhus University
+
+## Citing
+If you use this code, please cite both the original BayesOD & Deep Ensemble papers, the orginal public implementation and our comparative study:
+```
+@misc{thomsen2025bayesod_vs_ensemble,
+  title   = {A Comparative Study of Uncertainty Estimation Methods in 2D Object Detection: BayesOD and Deep Ensembles},
+  author  = {Thomsen, Andreas Kaag and Poulsen, Asger Song Høøck and Madsen, Niels Viggo Stark},
+  howpublished = {Course Project Report, Aarhus University},
+  year    = {2025},
+  url     = {https://github.com/akthomsen/CV_Uncertainty_Estimation}
+}
+```
