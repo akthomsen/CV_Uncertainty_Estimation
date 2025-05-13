@@ -150,7 +150,7 @@ n_fms = len(self.model.head_in_features)
    ```bash
    python train.py ...
    ```
-   - The command is:
+   - Example of use of command:
         ``` train
         python src/train_net.py --num-gpus 2 --dataset-dir BDD_DATASET_ROOT --config-file BDD-Detection/retinanet/retinanet_R_50_FPN_1x_reg_cls_var.yaml --random-seed 42 --resume
         ```
