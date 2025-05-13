@@ -145,13 +145,14 @@ archivePrefix={arXiv},
 primaryClass={cs.CV}}
 ```
 
-## Authors
+## Authors
 * Andreas Kaag Thomsen
 * Asger Song Høøck Poulsen
 * Niels Viggo Stark Madsen
+
 This project was done as part of the Computer Vision course at Aarhus University
 
-## Citing
+## Citing
 If you use this code, please cite both the original BayesOD & Deep Ensemble papers, the orginal public implementation and our comparative study:
 ```
 @misc{thomsen2025bayesod_vs_ensemble,
