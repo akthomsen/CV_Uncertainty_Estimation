@@ -1,35 +1,56 @@
-# A Review and Comparative Study on Probabilistic Object Detection in Autonomous Driving
+# A Comparative Study of Uncertainty Estimation Methods in 2D Object Detection: BayesOD and Deep Ensembles
+> Comparative study & reference implementation — Computer Vision, Aarhus University (2025)
+## Overview
+Deep neural‑network object detectors such as RetinaNet achieve state‑of‑the‑art accuracy, yet deploy poorly in safety‑critical systems because they lack calibrated *uncertainty* estimates.
 
-This repository is the official implementation of [A Review and Comparative Study on Probabilistic Object Detection in Autonomous Driving](https://arxiv.org/abs/2011.10671).
-## Requirements
+This repository reproduces and compares two methods for incorporating uncertainty estimation on a common code-base and dataset (BDD100K): 
+1. [BayesOD](https://www.researchgate.net/publication/344983540_BayesOD_A_Bayesian_Approach_for_Uncertainty_Estimation_in_Deep_Object_Detectors), introduced by Harakeh et al. in 2019
+2. [Deep Ensembles](https://proceedings.neurips.cc/paper_files/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract.html), proposed by Lakshminarayanan et al. in 2017.
 
-#### Software Support:
-Name | Supported Versions
---- | --- |
-Ubuntu |18.04, 20.04
-Python | 3.7 ,3.8
-CUDA | 10.1 ,10.2, 11.0
-Cudnn | 7.6.5 , 8.0.1
-PyTorch | 1.5 , 1.5.1, 1.6
 
-To install requirements virtualenv and virtualenvwrapper should be available on the target machine.
 
-**Virtual Environment Creation:**
-```
-# Clone repo
-git clone https://github.com/asharakeh/pod_compare.git
-cd pod_compare
+## Quick Start
+### Prerequisites
+- Python (3.7)
+- PyTorch (1.10.0)
+- CUDA (11.3)
+- cuDNN (8.7.0)
+- Detectron2 (0.6)
+- The available modules on the cluster (see ```module avail```).
+- The compute capabilities of the GPU (s86).
 
-# Create python virtual env
-mkvirtualenv pod_compare
+### Installation Steps
+1. Install Python 3.7 and make it the global Python version by running the following commands:
+    ```bash
+    pip install pyenv
+    pyenv install 3.7
+    pyenv global 3.7
+    ```
+2. From the available modules, load the following:
+    ```bash
+    module load cuda-11.3
+    module load cudnn-11.X-8.7.0
+    ```
+3. Install the requirements using ```pip install -r requirements.txt```.
+4. Install GPU-compatible ```torch```  and ```torchvision``` using the following command:
+    ```bash
+    pip install torch==1.10.0+cu113 torchvision==0.11.0+cu113 torchaudio==0.10.0 -f https://download.pytorch.org/whl/torch_stable.html
+    ```
+5. Install the ```detectron2``` package by running the command below. This is the only one compatible with the current version of ```torch``` and ```torchvision``` and the CUDA version.
+    ```bash
+    python -m pip install detectron2==0.6 -f \
+    https://dl.fbaipublicfiles.com/detectron2/wheels/cu113/torch1.10/index.html
+    ```
 
-# Add library path to virtual env
-add2virtualenv src
+6. For some reason the 0.6 version of ```detectron2``` is not compatible with the current package's expectation of the implementation of retinanet. In order to mitigate, do the following:
+    1. Go to [the detectron2 webpage](https://github.com/facebookresearch/detectron2/releases) and download release 0.4 as zip. 
+    2. Unzip the file and go to the ```/Users/au691667/Downloads/detectron2-0.4/detectron2/modeling/meta_arch```folder. 
+    3. Copy the ```retinanet.py``` file and paste it in the ```.pyenv/versions/3.7/site-packages/detectron2/modeling/meta_arch``` folder.
 
-# Install requirements
-cat requirements.txt | xargs -n 1 -L 1 pip install
-```
-## Datasets
+
+## Dataset
+
+### BDD Dataset
 Download the Berkeley Deep Drive (BDD) Object Detection Dataset [here](https://bdd-data.berkeley.edu/). The BDD
 dataset should have the following structure:
 <br>
@@ -46,53 +67,41 @@ dataset should have the following structure:
                     ├── test
                     ├── train
                     └── val
-                   
-Download the KITTI Object Detection Dataset [here](http://www.cvlibs.net/datasets/kitti/eval_object.php). The KITTI
-dataset should have the following structure:
-<br> 
 
-    └── KITTI_DATASET_ROOT
-        ├── object
-            ├── training    <-- 7481 train data
-            |   ├── image_2
-            |   ├── calib
-            |   └── label_2
-            └── testing     <-- 7580 test data
-                   ├── image_2
-                   └── calib
 
-Download the Lyft Object Detection Dataset [here](https://self-driving.lyft.com/level5/data/). The Lyft
-dataset needs to be converted to KITTI format first using the [official Lyft dataset API](https://github.com/lyft/nuscenes-devkit).
-The Lyft dataset should have the following structure:
-<br> 
-
-    └── LYFT_DATASET_ROOT
-        └── training
-            ├── image_2
-            └── label_2
-
-For all three datasets, labels need to be converted to COCO format. To do so, run the following:
-```
+For all BDD dataset, labels need to be converted to COCO format. To do so, run the following:
+```bash
 python src/core/datasets convert_bdd_to_coco.py --dataset-dir /path/to/bdd/dataset/root
 ```
-```
-python src/core/datasets convert_kitti_to_coco.py --dataset-dir /path/to/kitti/dataset/root
-```
-```
-python src/core/datasets convert_lyft_to_coco.py --dataset-dir /path/to/lyft/dataset/root
-```
-If the script to convert BDD labels to COCO format does not work, please use [these pre-converted labels](https://drive.google.com/file/d/1hOd3zX1Qt0_uV64uJBLidavjbtrv1tXI/view?usp=sharing). 
-## Training
-To train the model(s) in the paper, run this command:
+If the script to convert BDD labels to COCO format does not work, please use [these pre-converted labels](https://drive.google.com/file/d/1hOd3zX1Qt0_uV64uJBLidavjbtrv1tXI/view?usp=sharing).
 
-``` train
-python src/train_net.py
---num-gpus 2
---dataset-dir /path/to/bdd/dataset/root
---config-file BDD-Detection/retinanet/name_of_config.yaml
---random-seed xx
---resume
-```
+## Training
+To train the model(s) in the paper, run these commands:
+
+1. **Create session**  
+   ```bash
+   screen -S training
+   ```
+
+2. **Run training script**  
+   ```bash
+   python train.py ...
+   ```
+   - Example of use of command:
+        ``` train
+        python src/train_net.py --num-gpus 2 --dataset-dir BDD_DATASET_ROOT --config-file BDD-Detection/retinanet/retinanet_R_50_FPN_1x_reg_cls_var.yaml --random-seed 42 --resume
+        ```
+3. **Detach session**  
+   Press `Ctrl+A` then `D`
+
+4. **Reattach later**  
+   ```bash
+   screen -r training
+   ```
+
+### Useful Screen Commands:
+- List sessions: `screen -ls`
+- Kill session: `screen -XS training quit`
 
 ## Evaluation
 For running inference and evaluation of a model, run the following code:
@@ -100,32 +109,35 @@ For running inference and evaluation of a model, run the following code:
 python src/apply_net.py --dataset-dir /path/to/test/dataset/root --test-dataset test_dataset_name --config-file BDD-Detection/retinanet/name_of_config.yaml --inference-config Inference/name_of_inference_config.yaml
 ```
 
+python src/apply_net.py --dataset-dir BDD_DATASET_ROOT --test-dataset bdd_val --config-file BDD-Detection/retinanet/retinan
+et_R_50_FPN_1x_reg_cls_var_dropout.yaml --inference-config Inference/bayes_od_mc_dropout.yaml --random-seed 1
+
 `--test-dataset` can be one of `bdd_val`, `kitti_val`, or `lyft_val`. `--dataset-dir` corresponds to the root directory of the dataset used.
 
 Evaluation code will run inference on the test dataset and then will generate mAP, Negative Log Likelihood, Calibration Error, and Minimum Uncertainty Error results. If only evaluation of metrics is required,
 add `--eval-only` to the above code snippet.
 
-We provide a list of config combinations that generate the architectures used in our paper:
+## Results
 
-Method Name | Config File | Inference Config File | Pretrained Model
---- | --- | --- | ---
-Baseline RetinaNet | retinanet_R_50_FPN_1x.yaml| standard_nms.yaml | [retinanet_R_50_FPN_1x.pth](https://drive.google.com/file/d/1kOuXSjRoBLTDXYtCpjzI6Q-TBizFRaw5/view?usp=sharing)
-Loss Attenuation |retinanet_R_50_FPN_1x_reg_cls_var.yaml| standard_nms.yaml | [retinanet_R_50_FPN_1x_reg_cls_var.pth](https://drive.google.com/file/d/1yMspawb66LrZZidCdY3EeQlsF6aYYBrO/view?usp=sharing)
-Loss Attenuation + Dropout | retinanet_R_50_FPN_1x_reg_cls_var_dropout.yaml | mc_dropout_ensembles_pre_nms.yaml | [retinanet_R_50_FPN_1x_reg_cls_var_dropout.pth](https://drive.google.com/file/d/1ALGDsnAVJXK5zgSVbRSziYZlddUqrt2a/view?usp=sharing)
-BayesOD | retinanet_R_50_FPN_1x_reg_cls_var.yaml | bayes_od.yaml | [retinanet_R_50_FPN_1x_reg_cls_var.pth](https://drive.google.com/file/d/1yMspawb66LrZZidCdY3EeQlsF6aYYBrO/view?usp=sharing)
-BayesOD + Dropout | retinanet_R_50_FPN_1x_reg_cls_var_dropout.yaml | bayes_od_mc_dropout.yaml | [retinanet_R_50_FPN_1x_reg_cls_var_dropout.pth](https://drive.google.com/file/d/1ALGDsnAVJXK5zgSVbRSziYZlddUqrt2a/view?usp=sharing)
-Pre-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_pre_nms.yaml | -
-Post-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_post_nms.yaml | -
-Black Box| retinanet_R_50_FPN_1x_dropout.yaml | mc_dropout_ensembles_post_nms.yaml | [retinanet_R_50_FPN_1x_dropout.pth](https://drive.google.com/file/d/1ZL0djkgHokfeCnkSy0_jtxOS1T3ROmlL/view?usp=sharing)
-Output Redundancy| retinanet_R_50_FPN_1x.yaml | anchor_statistics.yaml |[retinanet_R_50_FPN_1x.pth](https://drive.google.com/file/d/1kOuXSjRoBLTDXYtCpjzI6Q-TBizFRaw5/view?usp=sharing)
+### Overview of trained models
+Unique ID | Method Name | Config File | Inference Config File | Trained
+--- | --- | --- | --- | ---
+M1 |Baseline RetinaNet | retinanet_R_50_FPN_1x.yaml| standard_nms.yaml | 🟩 
+M2 |Output Redundancy| retinanet_R_50_FPN_1x.yaml | anchor_statistics.yaml | 🟩 
+M3 |Loss Attenuation |retinanet_R_50_FPN_1x_reg_cls_var.yaml| standard_nms.yaml | 🟩
+M4 |Loss Attenuation + Dropout | retinanet_R_50_FPN_1x_reg_cls_var_dropout.yaml | mc_dropout_ensembles_pre_nms.yaml | 🟩
+M5 |BayesOD | retinanet_R_50_FPN_1x_reg_cls_var.yaml | bayes_od.yaml | 🟩
+M6 |BayesOD + Dropout | retinanet_R_50_FPN_1x_reg_cls_var_dropout.yaml | bayes_od_mc_dropout.yaml | 🟩
+M7 |Pre-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_pre_nms.yaml | 🟩
+M8 |Post-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_post_nms.yaml | 🟩
 
-Ensemble methods require multiple independent training runs using different random seeds. 
-To do so, run the training code while adding `random-seed xx`. We test with 5 runs using seed values of 0, 1000, 2000, 3000, and 4000 in our paper.
+### Evaluation with metrics
+![Method comparison](docs\img\evaluation.PNG)
 
-For evaluating with PDQ, please use the official PDQ code for COCO data available [here](https://github.com/david2611/pdq_evaluation).
+For a more detailed evaluation, see the project [notes](docs/notes.md).
 
-## Citation
-If you use this code, please cite our paper:
+## Acknowledgements
+This project re‑uses code from the public implementations of
 ```
 @misc{feng2020review,
 title={A Review and Comparative Study on Probabilistic Object Detection in Autonomous Driving}, 
@@ -136,5 +148,21 @@ archivePrefix={arXiv},
 primaryClass={cs.CV}}
 ```
 
-## License
-This code is released under the [Apache 2.0 License](LICENSE.md).
+## Authors
+* Andreas Kaag Thomsen
+* Asger Song Høøck Poulsen
+* Niels Viggo Stark Madsen
+
+This project was done as part of the Computer Vision course at Aarhus University
+
+## Citing
+If you use this code, please cite both the original BayesOD & Deep Ensemble papers, the orginal public implementation and our comparative study:
+```
+@misc{thomsen2025bayesod_vs_ensemble,
+  title   = {A Comparative Study of Uncertainty Estimation Methods in 2D Object Detection: BayesOD and Deep Ensembles},
+  author  = {Thomsen, Andreas Kaag and Poulsen, Asger Song Høøck and Madsen, Niels Viggo Stark},
+  howpublished = {Course Project Report, Aarhus University},
+  year    = {2025},
+  url     = {https://github.com/akthomsen/CV_Uncertainty_Estimation}
+}
+```
