@@ -133,7 +133,7 @@ M8 |Post-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_post_
 
 For a more detailed evaluation, see the project [notes](docs/notes.md).
 
-## Acknowledgements
+### Acknowledgements
 This project re‑uses code from the public implementations of
 ```
 @misc{feng2020review,
