@@ -129,7 +129,7 @@ M7 |Pre-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_pre_nm
 M8 |Post-NMS Ensembles| retinanet_R_50_FPN_1x_reg_cls_var.yaml | ensembles_post_nms.yaml | 🟩
 
 ### Evaluation with metrics
-![Method comparison](docs\img\evaluation.PNG)
+![Method comparison](docs/img/evaluation.PNG)
 
 For a more detailed evaluation, see the project [notes](docs/notes.md).
 
