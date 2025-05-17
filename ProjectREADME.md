@@ -109,6 +109,9 @@ For running inference and evaluation of a model, run the following code:
 python src/apply_net.py --dataset-dir /path/to/test/dataset/root --test-dataset test_dataset_name --config-file BDD-Detection/retinanet/name_of_config.yaml --inference-config Inference/name_of_inference_config.yaml
 ```
 
+python src/apply_net.py --dataset-dir BDD_DATASET_ROOT --test-dataset bdd_val --config-file BDD-Detection/retinanet/retinan
+et_R_50_FPN_1x_reg_cls_var_dropout.yaml --inference-config Inference/bayes_od_mc_dropout.yaml --random-seed 1
+
 `--test-dataset` can be one of `bdd_val`, `kitti_val`, or `lyft_val`. `--dataset-dir` corresponds to the root directory of the dataset used.
 
 Evaluation code will run inference on the test dataset and then will generate mAP, Negative Log Likelihood, Calibration Error, and Minimum Uncertainty Error results. If only evaluation of metrics is required,

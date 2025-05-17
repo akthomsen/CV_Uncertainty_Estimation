@@ -36,7 +36,7 @@ def main(args, cfg=None):
     res_coco_api = gt_coco_api.loadRes(prediction_file_name)
     results_api = COCOeval(gt_coco_api, res_coco_api, iouType='bbox')
 
-    results_api.params.catIds = [1, 3] #list(meta_catalog.thing_dataset_id_to_contiguous_id.keys())
+    results_api.params.catIds = [1, 2, 3, 4, 5, 6, 7] #list(meta_catalog.thing_dataset_id_to_contiguous_id.keys())
 
     # Calculate and print aggregate results
     results_api.evaluate()

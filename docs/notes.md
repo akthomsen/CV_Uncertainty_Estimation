@@ -14,7 +14,7 @@ This document serves as notes for the group on how to use the pod_compare packag
 - [Results](#results)
   - [Overview of trained models](#overview-of-trained-models)
   - [Evaluation with metrics](#evaluation-with-metrics)
-    - [M1](#m1)
+    - [M1: Baseline RetinaNet](#m1-baseline-retinanet)
     - [M4: Loss Attenuation + Dropout](#m4-loss-attenuation--dropout)
     - [❗ M6: BayesOD + Dropout](#-m6-bayesod--dropout)
     - [❗ M7: Pre-NMS Ensembles](#-m7-pre-nms-ensembles)
@@ -184,7 +184,7 @@ M9 |Black Box| retinanet_R_50_FPN_1x_dropout.yaml | mc_dropout_ensembles_post_nm
 
 ## Evaluation with metrics
 
-### M1
+### M1: Baseline RetinaNet
 Output from finished training:
 ```bash
 [04/24 00:00:39 d2.evaluation.fast_eval_api]: Evaluate annotation type *bbox*
@@ -220,7 +220,7 @@ Output from finished training:
 ```
 
 Output after inference:
-```bash
+<!-- ```bash
  Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.410
  Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.662
  Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.426
@@ -252,6 +252,41 @@ Done!
 | Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 |             0.0691             |             0.0737             |             0.2243            |             0.2063            |             0.4613            |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+``` -->
+
+```bash
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.288
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.525
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.265
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.071
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.304
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.509
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.224
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.378
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.408
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.157
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.452
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.628
+Classification Score at Optimal F-1 Score: 0.27689315676689147
+Began pre-processing ground truth annotations...
+Done!
+Began pre-processing predicted instances...
+/home/cv09f25/pod_compare/src/core/evaluation_tools/evaluation_utils.py:52: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  ../torch/csrc/utils/tensor_new.cpp:201.)
+  device), torch.as_tensor([box_inds], dtype=torch.float32).to(device)))
+Done!
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9952/9952 [00:31<00:00, 316.52it/s]
++------------------+---------------------+---------------------+---------------------+
+|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
++------------------+---------------------+---------------------+---------------------+
+| True Positives:  |        68881        |        0.6421       |      8694.0929      |
+| False Positives: |        20198        |        0.4576       |       -3.5162       |
+| False Negatives: |         8670        |          -          |          -          |
++------------------+---------------------+---------------------+---------------------+
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+|             0.0586             |             0.0738             |             0.2256            |             0.1949            |             0.4786            |
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 ```
 
@@ -285,7 +320,7 @@ python src/apply_net.py --dataset-dir BDD_DATASET_ROOT --test-dataset bdd_val --
 ```
 
 Output after inference:
-```bash
+<!-- ```bash
  Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.405
  Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.649
  Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.423
@@ -317,6 +352,41 @@ Done!
 | Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 |             0.0707             |             0.0092             |             0.0248            |             0.2072            |             0.3482            |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+``` -->
+
+```bash
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.274
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.500
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.254
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.063
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.290
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.494
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.217
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.367
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.393
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.124
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.443
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.628
+Classification Score at Optimal F-1 Score: 0.2709753468632698
+Began pre-processing ground truth annotations...
+Done!
+Began pre-processing predicted instances...
+/home/cv09f25/pod_compare/src/core/evaluation_tools/evaluation_utils.py:52: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  ../torch/csrc/utils/tensor_new.cpp:201.)
+  device), torch.as_tensor([box_inds], dtype=torch.float32).to(device)))
+Done!
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9949/9949 [00:31<00:00, 318.48it/s]
++------------------+---------------------+---------------------+---------------------+
+|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
++------------------+---------------------+---------------------+---------------------+
+| True Positives:  |        67020        |        0.6395       |       12.3188       |
+| False Positives: |        18469        |        0.4435       |       13.4687       |
+| False Negatives: |         8908        |          -          |          -          |
++------------------+---------------------+---------------------+---------------------+
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+|             0.0610             |             0.0098             |             0.0267            |             0.1877            |             0.3198            |
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 ```
 
@@ -500,7 +570,7 @@ erence-config Inference/ensembles_pre_nms.yaml
 ```
 
 Output after inference:
-```bash
+<!-- ```bash
  DONE (t=5.77s).
  Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.417
  Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.664
@@ -527,13 +597,47 @@ Classification Score at Optimal F-1 Score: 0.3322632536292076
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 |             0.0735             |             0.0428             |             0.0914            |             0.2003            |             0.4669            |
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+``` -->
+```bash
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.291
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.521
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.278
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.073
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.308
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.523
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.226
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.380
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.407
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.145
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.453
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.645
+Classification Score at Optimal F-1 Score: 0.2780491685228688
+Began pre-processing ground truth annotations...
+Done!
+Began pre-processing predicted instances...
+/home/cv09f25/pod_compare/src/core/evaluation_tools/evaluation_utils.py:52: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  ../torch/csrc/utils/tensor_new.cpp:201.)
+  device), torch.as_tensor([box_inds], dtype=torch.float32).to(device)))
+Done!
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9940/9940 [00:30<00:00, 331.07it/s]
++------------------+---------------------+---------------------+---------------------+
+|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
++------------------+---------------------+---------------------+---------------------+
+| True Positives:  |        68534        |        0.6407       |       14.7956       |
+| False Positives: |        16144        |        0.4601       |       16.4516       |
+| False Negatives: |         9160        |          -          |          -          |
++------------------+---------------------+---------------------+---------------------+
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+|             0.0644             |             0.0424             |             0.0902            |             0.1964            |             0.4701            |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 ```
 
 
 
 ### M8: Post-NMS Ensembles
 Output after inference:
-```bash
+<!-- ```bash
  Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.417
  Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.665
  Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.434
@@ -565,6 +669,40 @@ Done!
 | Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 |             0.0663             |             0.0428             |             0.0921            |             0.1980            |             0.4755            |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+``` -->
+```bash
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.290
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.526
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.275
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.073
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.306
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.521
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.233
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.394
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.422
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.156
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.471
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.658
+Classification Score at Optimal F-1 Score: 0.28825700495924267
+Began pre-processing ground truth annotations...
+Done!
+Began pre-processing predicted instances...
+/home/cv09f25/pod_compare/src/core/evaluation_tools/evaluation_utils.py:52: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  ../torch/csrc/utils/tensor_new.cpp:201.)
+  device), torch.as_tensor([box_inds], dtype=torch.float32).to(device)))
+Done!
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9957/9957 [00:31<00:00, 319.77it/s]
++------------------+---------------------+---------------------+---------------------+
+|   Output Type    | Number of Instances | Cls Ignorance Score | Reg Ignorance Score |
++------------------+---------------------+---------------------+---------------------+
+| True Positives:  |        68898        |        0.6353       |       14.7990       |
+| False Positives: |        21634        |        0.4630       |       16.3313       |
+| False Negatives: |         7621        |          -          |          -          |
++------------------+---------------------+---------------------+---------------------+
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+| Cls Marginal Calibration Error | Reg Expected Calibration Error | Reg Maximum Calibration Error | Cls Minimum Uncertainty Error | Reg Minimum Uncertainty Error |
++--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
+|             0.0580             |             0.0425             |             0.0905            |             0.1901            |             0.4753            |
 +--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+
 ```
 
